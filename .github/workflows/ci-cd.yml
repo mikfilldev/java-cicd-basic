@@ -1,0 +1,26 @@
+name: Java Test CI/CD
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+
+jobs:
+  build_test:
+
+    runs-on: [self-hosted, ubuntu-22.04]
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4.1.5
+      - name: Setup Java 17 JDK
+        uses: actions/setup-java@v4.2.1
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+      - name: Build with Maven
+        run: mvn -B package --file pom.xml
